@@ -27,41 +27,74 @@ public class MainMenu extends AppCompatActivity
 
     }
 
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-    }
-
-    public void OwnObservationsButtonClicked(View view) {
-    }
-
-    public void OthersObservationsButtonClicked(View view) {
-    }
-/*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view =  inflater.inflate(R.layout.activity_fragment_bird_list, container, false);
-
-        final ListView listView = view.findViewById(R.id.fragmentBirdObservationListView);
-
-        return view;
-    }
-
-    //TODO:Appen crasher når den har ReadTask på, kan være mangel på adapter? not sure
-
     //TODO: fix denne metode
     //TODO: skal have liste fra birdListItemAdapter.. se bookstore main
     @Override
-    public void onStart()
+    protected void onStart()
     {
         super.onStart();
         ReadTask task = new ReadTask();
         task.execute("http://anbo-restserviceproviderbooks.azurewebsites.net/Service1.svc/books");
     }
 
+    public void OwnObservationsButtonClicked(View view)
+    {
 
+    }
+
+    public void OthersObservationsButtonClicked(View view)
+    {
+
+    }
+//TODO: VIGTIGT!!!!!! DEN HER METODE SKAL LAVES FÆRDIGT DIN PIKANTILOPE!!
+    private class ReadTask extends ReadHttpTask
+    {
+        @Override
+        protected void onPostExecute(CharSequence jsonString)
+        {
+            Gson gson = new GsonBuilder().create();
+            final Bird[] birds = gson.fromJson(jsonString.toString(), Bird[].class);
+
+            ListView listView = findViewById(R.id.mainMenu_BirdList_listView);
+            BirdListItemAdapter adapter = new BirdListItemAdapter(getBaseContext(), R.layout.birdlist_item, birds);
+        }
+    }
+
+/*
+    private class ReadTask extends ReadHttpTask
+    {
+        @Override
+        protected void onPostExecute(CharSequence jsonString) {
+            TextView messageTextView = findViewById(R.id.main_message_textview);
+
+            Gson gson = new GsonBuilder().create();
+            final Book[] books = gson.fromJson(jsonString.toString(), Book[].class);
+
+            ListView listView = findViewById(R.id.main_books_listview);
+            //ArrayAdapter<Book> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, books);
+            BookListItemAdapter adapter = new BookListItemAdapter(getBaseContext(), R.layout.booklist_item, books);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getBaseContext(), BookActivity.class);
+                    //Book book = books.get((int) id);
+                    Book book = books[(int) id];
+                    intent.putExtra("BOOK", book);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        protected void onCancelled(CharSequence message) {
+            TextView messageTextView = findViewById(R.id.main_message_textview);
+            messageTextView.setText(message);
+            Log.e("BOOKS", message.toString());
+        }
+    }
+*/
+/*
     //TODO: skulle gerne være iorden.. kig her hvis der er problemer
     private class ReadTask extends ReadHttpTask
     {
@@ -95,5 +128,6 @@ public class MainMenu extends AppCompatActivity
             messageTextView.setText(message);
             Log.e("BIRDS", message.toString());
         }
-    }*/
+    }
+*/
 }
