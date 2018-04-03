@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,8 +31,12 @@ public class MainMenu extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
-        ReadTask task = new ReadTask();
-        task.execute("http://anbo-restserviceproviderbooks.azurewebsites.net/Service1.svc/books");
+
+        //ReadTaskBirdList taskBirdList = new ReadTaskBirdList();
+        //taskBirdList.execute("http://birdobservationservice.azurewebsites.net/Service1.svc/birds");
+
+        ReadTaskObservationList taskObservationList = new ReadTaskObservationList();
+        taskObservationList.execute("http://birdobservationservice.azurewebsites.net/Service1.svc/observations");
     }
 
     public void OwnObservationsButtonClicked(View view)
@@ -46,8 +48,8 @@ public class MainMenu extends AppCompatActivity
     {
 
     }
-//TODO: VIGTIGT!!!!!! DEN HER METODE SKAL LAVES FÆRDIGT DIN PIKANTILOPE!!
-    private class ReadTask extends ReadHttpTask
+/*
+    private class ReadTaskBirdList extends ReadHttpTask
     {
         @Override
         protected void onPostExecute(CharSequence jsonString)
@@ -57,6 +59,63 @@ public class MainMenu extends AppCompatActivity
 
             ListView listView = findViewById(R.id.mainMenu_BirdList_listView);
             BirdListItemAdapter adapter = new BirdListItemAdapter(getBaseContext(), R.layout.birdlist_item, birds);
+            //ArrayAdapter<Bird> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.birdlist_item, birds);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> aædapterView, View view, int position, long id)
+                {
+                    Intent intent = new Intent(getBaseContext(), specific_bird.class);
+                    Bird bird = birds[(int) id];
+                    intent.putExtra("BIRD", bird);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        protected void onCancelled(CharSequence message)
+        {
+            TextView messageTextView = findViewById(R.id.mainMenu_Message_TextView);
+            messageTextView.setText(message);
+            Log.e("BIRDS", message.toString());
+        }
+    }
+*/
+
+    private class ReadTaskObservationList extends ReadHttpTask
+    {
+        @Override
+        protected void onPostExecute(CharSequence jsonString)
+        {
+            Gson gson = new GsonBuilder().create();
+            final Observation[] observations = gson.fromJson(jsonString.toString(), Observation[].class);
+
+            ListView listView = findViewById(R.id.mainMenu_BirdList_listView);
+            ObservationListItemAdapter adapter = new ObservationListItemAdapter(getBaseContext(),
+                    R.layout.activity_observation_list_item_adapter, observations);
+            //ArrayAdapter<Bird> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.birdlist_item, birds);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> aædapterView, View view, int position, long id)
+                {
+                    Intent intent = new Intent(getBaseContext(), specific_bird.class);
+                    Observation observation = observations[(int) id];
+                    intent.putExtra("OBSERVATION", observation);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        protected void onCancelled(CharSequence message)
+        {
+            TextView messageTextView = findViewById(R.id.mainMenu_Message_TextView);
+            messageTextView.setText(message);
+            Log.e("BIRDS", message.toString());
         }
     }
 
@@ -123,7 +182,8 @@ public class MainMenu extends AppCompatActivity
 
 
         @Override
-        protected void onCancelled(CharSequence message) {
+        protected void onCancelled(CharSequence message)
+        {
             TextView messageTextView = getActivity().findViewById(R.id.fragmentBird_Message_TextView);
             messageTextView.setText(message);
             Log.e("BIRDS", message.toString());

@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenu"></activity>
+        <activity android:name=".MainMenu" />
+        <activity android:name=".birdlist_item" />
+        <activity android:name=".specific_bird" />
+        <activity android:name=".AddBird" />
+        <activity android:name=".ObservationListItemAdapter"></activity>
     </application>
 
 </manifest>

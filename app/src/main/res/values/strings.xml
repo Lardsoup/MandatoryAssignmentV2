@@ -5,4 +5,11 @@
     <string name="app_login_button_name">Login</string>
     <string name="app_MainMenu_buton_OwnObservations">Own\nObservations</string>
     <string name="app_MainMenu_buton_OthersObservations">Others\nObservations</string>
+    <string name="app_specificBird_headerId">Bird Id = </string>
+    <string name="app_specificBird_NameDanish_TextView">Navn</string>
+    <string name="app_specificBird_NameDanishHint_EditText">Fuglens Navn</string>
+    <string name="app_specificBird_Created_TextView">Created date</string>
+    <string name="app_specificBird_CreatedHint_EditText">Created Date</string>
+    <string name="app_specificBird_UserId_TextView">User Id</string>
+    <string name="app_specificBird_UserIdHint_EditText">User Id</string>
 </resources>

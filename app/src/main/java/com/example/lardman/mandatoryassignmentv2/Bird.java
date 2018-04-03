@@ -3,6 +3,7 @@ package com.example.lardman.mandatoryassignmentv2;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Lardman on 30-03-2018.
