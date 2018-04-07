@@ -21,8 +21,11 @@ public class MainMenu extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
         ListView listView = findViewById(R.id.mainMenu_BirdList_listView);
 
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.mainMenu_toolbar);
+        setSupportActionBar(toolbar);
     }
 
     //TODO: fix denne metode
@@ -47,6 +50,42 @@ public class MainMenu extends AppCompatActivity
     public void OthersObservationsButtonClicked(View view)
     {
 
+    }
+
+
+    private class ReadTaskObservationList extends ReadHttpTask
+    {
+        @Override
+        protected void onPostExecute(CharSequence jsonString)
+        {
+            Gson gson = new GsonBuilder().create();
+            final Observation[] observations = gson.fromJson(jsonString.toString(), Observation[].class);
+
+            ListView listView = findViewById(R.id.mainMenu_BirdList_listView);
+            ObservationListItemAdapter adapter = new ObservationListItemAdapter(getBaseContext(),
+                    R.layout.activity_observation_list_item_adapter, observations);
+            //ArrayAdapter<Bird> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.birdlist_item, birds);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> aædapterView, View view, int position, long id)
+                {
+                    Intent intent = new Intent(getBaseContext(), specific_bird.class);
+                    Observation observation = observations[(int) id];
+                    intent.putExtra("OBSERVATION", observation);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        protected void onCancelled(CharSequence message)
+        {
+            TextView messageTextView = findViewById(R.id.mainMenu_Message_TextView);
+            messageTextView.setText(message);
+            Log.e("BIRDS", message.toString());
+        }
     }
 /*
     private class ReadTaskBirdList extends ReadHttpTask
@@ -83,42 +122,6 @@ public class MainMenu extends AppCompatActivity
         }
     }
 */
-
-    private class ReadTaskObservationList extends ReadHttpTask
-    {
-        @Override
-        protected void onPostExecute(CharSequence jsonString)
-        {
-            Gson gson = new GsonBuilder().create();
-            final Observation[] observations = gson.fromJson(jsonString.toString(), Observation[].class);
-
-            ListView listView = findViewById(R.id.mainMenu_BirdList_listView);
-            ObservationListItemAdapter adapter = new ObservationListItemAdapter(getBaseContext(),
-                    R.layout.activity_observation_list_item_adapter, observations);
-            //ArrayAdapter<Bird> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.birdlist_item, birds);
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> aædapterView, View view, int position, long id)
-                {
-                    Intent intent = new Intent(getBaseContext(), specific_bird.class);
-                    Observation observation = observations[(int) id];
-                    intent.putExtra("OBSERVATION", observation);
-                    startActivity(intent);
-                }
-            });
-        }
-
-        @Override
-        protected void onCancelled(CharSequence message)
-        {
-            TextView messageTextView = findViewById(R.id.mainMenu_Message_TextView);
-            messageTextView.setText(message);
-            Log.e("BIRDS", message.toString());
-        }
-    }
-
 /*
     private class ReadTask extends ReadHttpTask
     {
@@ -154,7 +157,6 @@ public class MainMenu extends AppCompatActivity
     }
 */
 /*
-    //TODO: skulle gerne være iorden.. kig her hvis der er problemer
     private class ReadTask extends ReadHttpTask
     {
 

@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.lardman.mandatoryassignmentv2.MainMenu">
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/mainMenu_ownObservations_Button"
-        android:layout_weight="1"
+    <include
+        android:id="@+id/mainMenu_toolbar"
+        layout="@layout/toolbar_main"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="OwnObservationsButtonClicked"
-        android:text="@string/app_MainMenu_buton_OwnObservations"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/mainMenu_othersObservations_Button"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="OthersObservationsButtonClicked"
-        android:text="@string/app_MainMenu_buton_OthersObservations"/>
+        <Button
+            android:id="@+id/mainMenu_ownObservations_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="OwnObservationsButtonClicked"
+            android:text="@string/app_MainMenu_buton_OwnObservations" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/mainMenu_othersObservations_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="OthersObservationsButtonClicked"
+            android:text="@string/app_MainMenu_buton_OthersObservations" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/mainMenu_BirdList_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/mainMenu_Message_TextView"
