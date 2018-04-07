@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,19 +50,39 @@ public class MainMenu extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
         setShareActionIntent("Want to join me for pizza?");
         return super.onCreateOptionsMenu(menu);
     }
-
-    private void setShareActionIntent(String text) {
+    //TODO: share option skal kigges på om det er noget jeg skal have? tror det ikke
+    private void setShareActionIntent(String text)
+    {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         shareActionProvider.setShareIntent(intent);
+    }
+    //TODO: skal have fixet OderActivity Class.. den findes ikke endnu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_create_order:
+                Intent intent = new Intent(this, OrderActivity.class);
+                startActivity(intent);
+                return true; // true: menu processing done, no further actions
+            case R.id.action_nothing_really:
+                Toast.makeText(this, "Menu ...", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_absolutely_nothing:
+                Toast.makeText(this, "Menu ...", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void OwnObservationsButtonClicked(View view)
