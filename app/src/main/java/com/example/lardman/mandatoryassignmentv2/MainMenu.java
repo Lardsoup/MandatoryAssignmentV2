@@ -2,8 +2,12 @@ package com.example.lardman.mandatoryassignmentv2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +19,7 @@ import com.google.gson.GsonBuilder;
 
 public class MainMenu extends AppCompatActivity
 {
+    ShareActionProvider shareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,6 +33,7 @@ public class MainMenu extends AppCompatActivity
         setSupportActionBar(toolbar);
     }
 
+
     //TODO: fix denne metode
     //TODO: skal have liste fra birdListItemAdapter.. se bookstore main
     @Override
@@ -40,6 +46,22 @@ public class MainMenu extends AppCompatActivity
 
         ReadTaskObservationList taskObservationList = new ReadTaskObservationList();
         taskObservationList.execute("http://birdobservationservice.azurewebsites.net/Service1.svc/observations");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        setShareActionIntent("Want to join me for pizza?");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setShareActionIntent(String text) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, text);
+        shareActionProvider.setShareIntent(intent);
     }
 
     public void OwnObservationsButtonClicked(View view)
