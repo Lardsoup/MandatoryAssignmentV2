@@ -3,6 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuMain_AddBird_Button"
+        android:orderInCategory="1"
+        android:title="@string/app_menuMain_AddBird_Button"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menuMain_Logout_Button"
+        android:orderInCategory="2"
+        android:title="@string/app_menuMain_Logout_Button"
+        app:showAsAction="ifRoom"/>
+
+<!--
+    <item
         android:id="@+id/action_create_order"
         android:icon="@mipmap/ic_launcher"
         android:orderInCategory="1"
@@ -29,4 +42,6 @@
         android:orderInCategory="4"
         android:title="Nothing2"
         app:showAsAction="never" />
+
+-->
 </menu>

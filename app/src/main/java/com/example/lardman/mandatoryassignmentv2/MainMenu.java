@@ -53,12 +53,14 @@ public class MainMenu extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_share);
-        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        setShareActionIntent("Want to join me for pizza?");
+        //MenuItem menuItem = menu.findItem(R.id.action_share);
+        //shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        //setShareActionIntent("Want to join me for pizza?");
         return super.onCreateOptionsMenu(menu);
     }
+
     //TODO: share option skal kigges på om det er noget jeg skal have? tror det ikke
+/*
     private void setShareActionIntent(String text)
     {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -66,18 +68,17 @@ public class MainMenu extends AppCompatActivity
         intent.putExtra(Intent.EXTRA_TEXT, text);
         shareActionProvider.setShareIntent(intent);
     }
-    //TODO: skal have fixet OderActivity Class.. den findes ikke endnu
+*/
+
+    //TODO: skal have fixet OderActivity Class.. den findes ikke endnu.. skal vi have den??
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_create_order:
+            case R.id.menuMain_AddBird_Button:
                 Intent intent = new Intent(this, OrderActivity.class);
                 startActivity(intent);
                 return true; // true: menu processing done, no further actions
-            case R.id.action_nothing_really:
-                Toast.makeText(this, "Menu ...", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.action_absolutely_nothing:
+            case R.id.menuMain_Logout_Button:
                 Toast.makeText(this, "Menu ...", Toast.LENGTH_LONG).show();
                 return true;
             default:
@@ -112,7 +113,7 @@ public class MainMenu extends AppCompatActivity
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
                 @Override
-                public void onItemClick(AdapterView<?> aædapterView, View view, int position, long id)
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
                 {
                     Intent intent = new Intent(getBaseContext(), specific_bird.class);
                     Observation observation = observations[(int) id];
