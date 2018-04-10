@@ -20,7 +20,6 @@ import com.google.gson.GsonBuilder;
 
 public class MainMenu extends AppCompatActivity
 {
-    ShareActionProvider shareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,9 +33,6 @@ public class MainMenu extends AppCompatActivity
         setSupportActionBar(toolbar);
     }
 
-
-    //TODO: fix denne metode
-    //TODO: skal have liste fra birdListItemAdapter.. se bookstore main
     @Override
     protected void onStart()
     {
@@ -53,33 +49,20 @@ public class MainMenu extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //MenuItem menuItem = menu.findItem(R.id.action_share);
-        //shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        //setShareActionIntent("Want to join me for pizza?");
         return super.onCreateOptionsMenu(menu);
     }
 
-    //TODO: share option skal kigges på om det er noget jeg skal have? tror det ikke
-/*
-    private void setShareActionIntent(String text)
-    {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, text);
-        shareActionProvider.setShareIntent(intent);
-    }
-*/
-
-    //TODO: skal have fixet OderActivity Class.. den findes ikke endnu.. skal vi have den??
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.menuMain_AddBird_Button:
-                Intent intent = new Intent(this, OrderActivity.class);
+                Intent intent = new Intent(this, AddBird.class);
                 startActivity(intent);
-                return true; // true: menu processing done, no further actions
+                return true;
             case R.id.menuMain_Logout_Button:
-                Toast.makeText(this, "Menu ...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Logout Button\nClicked", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -116,8 +99,10 @@ public class MainMenu extends AppCompatActivity
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
                 {
                     Intent intent = new Intent(getBaseContext(), specific_bird.class);
-                    Observation observation = observations[(int) id];
-                    intent.putExtra("OBSERVATION", observation);
+                    Bundle obs = new Bundle();
+                    obs.putSerializable("observations", observations);
+                    intent.putExtra("OBSERVATIONS", obs);
+                    intent.putExtra("ID", id);
                     startActivity(intent);
                 }
             });

@@ -12,6 +12,6 @@
     <string name="app_specificBird_CreatedHint_EditText">Created Date</string>
     <string name="app_specificBird_UserId_TextView">User Id</string>
     <string name="app_specificBird_UserIdHint_EditText">User Id</string>
-    <string name="app_menuMain_AddBird_Button">Add\\nBird</string>
-    <string name="app_menuMain_Logout_Button">Log\\nOut</string>
+    <string name="app_menuMain_AddBird_Button">Add\nBird</string>
+    <string name="app_menuMain_Logout_Button">Log\nOut</string>
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 //TODO: hele den her klasse er FUCKED.. fix it
 public class AddBird extends AppCompatActivity
