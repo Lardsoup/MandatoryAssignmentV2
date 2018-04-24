@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
+
 
 public class MainMenu extends AppCompatActivity
 {
@@ -98,11 +100,10 @@ public class MainMenu extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
                 {
+
                     Intent intent = new Intent(getBaseContext(), specific_bird.class);
-                    Bundle obs = new Bundle();
-                    obs.putSerializable("observations", observations);
-                    intent.putExtra("OBSERVATIONS", obs);
-                    intent.putExtra("ID", id);
+                    Observation obs = observations[(int) id];
+                    intent.putExtra("OBSERVATION", obs);
                     startActivity(intent);
                 }
             });
@@ -116,6 +117,7 @@ public class MainMenu extends AppCompatActivity
             Log.e("BIRDS", message.toString());
         }
     }
+
 /*
     private class ReadTaskBirdList extends ReadHttpTask
     {

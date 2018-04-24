@@ -14,9 +14,6 @@ import java.util.List;
 /**
  * Created by Lardman on 31-03-2018.
  */
-//TODO: observations vises nu istedet for birds, birds skal bruges til valg af fugl når man skal oprette en fugl
-//TODO: vis de rigtige ting fra observations istedet for Id, birdname og created
-//TODO: fix created timestamp så det vises rigtigt
 public class ObservationListItemAdapter extends ArrayAdapter<Observation>
 {
     private final int resource;
@@ -38,7 +35,7 @@ public class ObservationListItemAdapter extends ArrayAdapter<Observation>
     public View getView(int position, View convertView, @NonNull ViewGroup parent)
     {
         Observation observation = getItem(position);
-        String name = observation.getNameDanish(); //TODO: sat til nameDanish.. hør lige hvordan det skal sættes op hvis der er flere sprog
+        String name = observation.getNameDanish();
         String created = observation.getCreated();
         int id = observation.getId();
         String idString = Integer.toString(id);

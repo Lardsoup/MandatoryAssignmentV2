@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-//TODO: hele den her klasse er FUCKED.. fix it
+
 public class AddBird extends AppCompatActivity
 {
     private Bird bird;
@@ -35,7 +35,6 @@ public class AddBird extends AppCompatActivity
         userIdView = findViewById(R.id.specificBird_UserId_EditText);
         userIdView.setText(bird.getUserId());
     }
-//TODO: fix onCreate
 /*
     public void deleteBook(View view)
     {

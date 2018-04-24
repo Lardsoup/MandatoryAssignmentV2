@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-//TODO: kig på den her class og find ud af hvad den laver og om det passer til dit program
 public class HttpHelper
 {
 

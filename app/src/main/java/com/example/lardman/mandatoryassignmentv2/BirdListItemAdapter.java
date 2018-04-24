@@ -39,7 +39,7 @@ public class BirdListItemAdapter extends ArrayAdapter<Bird>
     public View getView(int position, View convertView, @NonNull ViewGroup parent)
     {
         Bird bird = getItem(position);
-        String name = bird.getNameDanish(); //TODO: sat til nameDanish.. hør lige hvordan det skal sættes op hvis der er flere sprog
+        String name = bird.getNameDanish();
         String created = bird.getCreated();
         int id = bird.getId();
         String idString = Integer.toString(id);

@@ -8,6 +8,7 @@ import android.view.View;
 
 public class Login extends AppCompatActivity
 {
+    private String TAG = "LOGIN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -16,10 +17,9 @@ public class Login extends AppCompatActivity
         setContentView(R.layout.activity_login);
     }
 
-    //TODO: login button skal laves.. den kan kun gå til næste side lige nu.. checker intet
     public void LoginButtonClicked(View view)
     {
-        Log.d("TAG", "Login button pressed");
+        Log.d(TAG, "Login button pressed");
         Intent intent = new Intent(this, MainMenu.class);
         //startActivity(intent);
         startActivityForResult(intent, 31415);

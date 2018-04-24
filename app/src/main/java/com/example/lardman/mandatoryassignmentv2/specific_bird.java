@@ -9,16 +9,18 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.view.GestureDetector;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.text.DateFormat;
+import java.util.ArrayList;
 
-//TODO: hele den her klasse er FUCKED.. fix it
-public class specific_bird extends AppCompatActivity
+public class specific_bird extends AppCompatActivity implements GestureDetector.OnGestureListener
 {
-    private String TAG = "SPECIFIC_BIRD";
-    private int id;
+    private String TAG = "SBIRD";
+    private long id;
     private Observation[] observations;
     private Observation singleObservation;
     private TextView headingView, nameDanishView, createdView, userIdView;
@@ -30,13 +32,8 @@ public class specific_bird extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_bird);
 
-
-        //TODO: prøver og sende en liste over istedet for det individuelle object.. se om du kan få det til at virke så man kan swipe rigtigt
         Intent intent = getIntent();
-        Bundle obs = getIntent().getBundleExtra("OBSERVATIONS");
-        id = (int) intent.getSerializableExtra("ID");
-        observations = (Observation[]) obs.getSerializable("observations");
-        singleObservation = observations[id];
+        singleObservation = (Observation) intent.getSerializableExtra("OBSERVATION");
 
         headingView = findViewById(R.id.specificBird_headerId_TextView);
         headingView.setText(Integer.toString(singleObservation.getId()));
@@ -49,81 +46,62 @@ public class specific_bird extends AppCompatActivity
 
         userIdView = findViewById(R.id.specificBird_headerCreated_TextView);
         userIdView.setText(singleObservation.getCreated());
-/*
-        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener()
+
+
+        gestureDetector = new GestureDetector(this, this);
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent)
+    {
+        Log.d(TAG, "onLongPress");
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+    {
+        Log.d(TAG, "onFling " + e1.toString() + "::::" + e2.toString());
+
+        boolean leftSwipe = e1.getX() > e2.getX();
+        boolean rightSwipe = e1.getX() < e2.getX();
+
+        Log.d(TAG, "onFling left: " + leftSwipe);
+        if (leftSwipe)
         {
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
-            {
-                Log.d(TAG, "onFling " + e1.toString() + "::::" + e2.toString());
-
-                boolean leftSwipe = e1.getX() > e2.getX();
-                boolean rightSwipe = e1.getX() < e2.getX();
-
-                if (leftSwipe)
-                {
-
-                }
-                return true;
-            }
-        });
-
-*/
-    }
-
-
-//TODO: fix onCreate
-/*
-    public void deleteBook(View view)
-    {
-        DeleteTask task = new DeleteTask();
-        task.execute("http://anbo-restserviceproviderbooks.azurewebsites.net/Service1.svc/books/" + book.getId());
-        finish();
-    }
-
-    public void updateBook(View view)
-    {
-        // code missing: Left as an exercise
-    }
-*/
-/*
-    public void back(View view) {
-        finish();
-    }
-
-    private class DeleteTask extends AsyncTask<String, Void, CharSequence>
-    {
-        @Override
-        protected CharSequence doInBackground(String... urls)
-        {
-            String urlString = urls[0];
-            try
-            {
-                URL url = new URL(urlString);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("DELETE");
-                int responseCode = connection.getResponseCode();
-                if (responseCode % 100 != 2)
-                {
-                    throw new IOException("Response code: " + responseCode);
-                }
-                return "Nothing";
-            } catch (MalformedURLException e)
-            {
-                return e.getMessage() + " " + urlString;
-            } catch (IOException e)
-            {
-                return e.getMessage();
-            }
+            Toast.makeText(this, "Swipe Left", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "SwipeLeft");
         }
-
-        @Override
-        protected void onCancelled(CharSequence charSequence)
+        else if (rightSwipe)
         {
-            super.onCancelled(charSequence);
-            TextView messageView = findViewById(R.id.book_message_textview);
-            messageView.setText(charSequence);
+            Toast.makeText(this, "Swipe Right", Toast.LENGTH_SHORT).show();
         }
+        return true;
     }
-*/
 }

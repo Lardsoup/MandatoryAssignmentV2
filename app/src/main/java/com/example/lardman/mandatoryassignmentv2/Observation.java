@@ -1,5 +1,8 @@
 package com.example.lardman.mandatoryassignmentv2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -160,4 +163,5 @@ public class Observation implements Serializable
     {
         return this.NameEnglish;
     }
+
 }
